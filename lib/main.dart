@@ -19,7 +19,6 @@ List<String> images = [
   "assets/images/pic11.jpg",
   "assets/images/pic12.jpg"
 ];
-String img1 = "", img2 = "", img3 = "", img4 = "";
 
 _randomNum() {
   Random random = Random();
