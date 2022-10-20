@@ -1,45 +1,31 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const HomePage());
 }
 
-final List<String> phoneNumbers = [
-  "090556837750",
-  "090556837751",
-  "090556837752",
-  "090556837753",
-  "090556837754",
-  "090556837755",
-  "090556837757",
-  "090556837759",
-  "090556837710",
-  "090556837711",
-  "090556837712",
-  "090556837713",
-  "090556837714",
-  "0905568377515",
-  "0905568377526",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758",
-  "090556837758"
+List<String> images = [
+  "assets/images/pic0.jpg",
+  "assets/images/pic2.jpg",
+  "assets/images/pic3.jpg",
+  "assets/images/pic4.jpg",
+  "assets/images/pic5.jpg",
+  "assets/images/pic6.jpg",
+  "assets/images/pic7.jpg",
+  "assets/images/pic8.jpg",
+  "assets/images/pic9.jpg",
+  "assets/images/pic10.jpg",
+  "assets/images/pic11.jpg",
+  "assets/images/pic12.jpg"
 ];
+String img1 = "", img2 = "", img3 = "", img4 = "";
+
+_randomNum() {
+  Random random = Random();
+  int randomNumber = random.nextInt(images.length);
+  return randomNumber;
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,36 +38,92 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.blue,
-      title: 'Contacts',
-      home: Scaffold(
-        drawer: const Drawer(),
-        appBar: AppBar(
-          title: const Text('Contacts'),
-        ),
-        body: ListView.builder(
-          itemCount: phoneNumbers.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: const Icon(
-                Icons.person,
-                size: 30,
-              ),
-              title: Text(
-                phoneNumbers[index],
-                style: const TextStyle(
-                  fontSize: 20,
+        color: Colors.blue,
+        title: 'Contacts',
+        home: Scaffold(
+          drawer: const Drawer(),
+          appBar: AppBar(
+            title: const Text('Images'),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 400,
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 1,
+                            crossAxisSpacing: 1,
+                            mainAxisExtent: 200),
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                              left: BorderSide(color: Colors.red, width: 2),
+                              right: BorderSide(color: Colors.red, width: 2),
+                              top: BorderSide(color: Colors.red, width: 2),
+                              bottom: BorderSide(color: Colors.red, width: 2)),
+                        ),
+                        margin: const EdgeInsets.all(3),
+                        width: 10.0,
+                        child: Image.asset(
+                          images[_randomNum()],
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              subtitle: const Text('family'),
-              hoverColor: Colors.blue,
-              selectedTileColor: Colors.blue,
-              enableFeedback: true,
-              iconColor: Colors.blue,
-            );
-          },
-        ),
-      ),
-    );
+                SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: const Icon(Icons.add),
+                        title: Text(
+                          images[_randomNum()],
+                          textScaleFactor: 1.5,
+                        ),
+                        trailing: const Icon(Icons.done),
+                        subtitle: const Text('This image is displayed'),
+                        selected: true,
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                minimumSize: const Size(150, 50)),
+                            onPressed: () {
+                              setState(() {
+                                _randomNum();
+                              });
+                            },
+                            child: const Text(
+                              'Shuffle Image',
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
